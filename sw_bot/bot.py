@@ -1,12 +1,11 @@
-
 import discord
 import requests
 from bs4 import BeautifulSoup
 import asyncio
+import os
 
 client = discord.Client() #디스코드와 봇과의 연결을 client변수에 할당
 
-token = "토큰입력"
 
 univ_url = "http://computing.hanyang.ac.kr/open/notice.php"
 sw_url = "http://computing.hanyang.ac.kr/open/deptNotice.php"
@@ -105,5 +104,5 @@ async def on_message(message):
                     else:
                         embed.add_field(name="===========================일반============================", value='[%s](%s)%s' % (name,url_link,day), inline=False)     
         await message.channel.send(embed=embed)
-
-client.run(token) 
+access_token = os.environ["BOT_TOKEN]
+client.run(access_token) 
