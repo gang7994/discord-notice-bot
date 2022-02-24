@@ -104,5 +104,5 @@ async def on_message(message):
                     else:
                         embed.add_field(name="===========================일반============================", value='[%s](%s)%s' % (name,url_link,day), inline=False)     
         await message.channel.send(embed=embed)
-acces_token = os.environ["BOT_TOKEN"]
+acces_token = os.environ['BOT_TOKEN']
 client.run(access_token) 
