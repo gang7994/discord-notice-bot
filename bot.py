@@ -20,7 +20,7 @@ async def on_message(message):
     if message.content == "!info":
         embed = discord.Embed(title="명령어")
 
-        embed.set_author(name="SW Notice Bot", url="http://blog.naver.com/seojune5383", icon_url="https://www.hanyang.ac.kr/documents/20182/73809/HYU_symbol_basic_png.png/72485650-ecb2-4007-a0ed-bc4b5c0d323b?t=1474070402203")
+        embed.set_author(name="SW Notice Bot", url="https://github.com/gang7994/discord-notice-bot.git", icon_url="https://www.hanyang.ac.kr/documents/20182/73809/HYU_symbol_basic_png.png/72485650-ecb2-4007-a0ed-bc4b5c0d323b?t=1474070402203")
         embed.add_field(name="!info", value="정보\n", inline=False)
         embed.add_field(name="!clear", value="메세지 10개 삭제\n", inline=False)
         embed.add_field(name="!대학공지", value="대학 공통공지 출력\n", inline=False)
@@ -49,8 +49,8 @@ async def on_message(message):
         res = requests.get(url, headers=headers).text
         soup = BeautifulSoup(res, "lxml")
         notices = soup.find("table", attrs={"class":"bbs_con"}).find("tbody").find_all("tr")
-        embed = discord.Embed(title="제목")
-        embed.set_author(name="프로필", url="http://blog.naver.com/seojune5383", icon_url="https://cdn.discordapp.com/attachments/779326874026377226/838400630405857360/yxTC6ZdE0qtg3WML99JOirgEo26CKwsv4X4GZW3zsTgFxQIqHwabQpHGbRC7W63mJ_9Lq3UKx6AE17jRikqJ3dz-1C6Pdia3ovlr.png")
+        embed = discord.Embed(title="[대학공지]")
+        embed.set_author(name="SW Notice Bot", url="https://github.com/gang7994/discord-notice-bot.git", icon_url="https://hywiki.s3.amazonaws.com/thumb/f/fe/%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4%ED%95%99%EB%B6%80.jpg/300px-%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4%ED%95%99%EB%B6%80.jpg")        
         a,b=0,0
         for notice in notices:
             col = notice.find_all("td")
@@ -60,17 +60,21 @@ async def on_message(message):
             link = col[1].a["href"]
             url_link = "http://computing.hanyang.ac.kr" + link
             if num.get_text() == "[공지]":
+                if a==0:
+                    embed.add_field(name="[공지]", value='[%s](%s)%s' % (name,url_link,day), inline=False)
                 a+=1
-                if a > 3:
+                if a > 7:
                     continue
-                else:
-                    embed.add_field(name="===========================공지============================", value='[%s](%s)%s' % (name,url_link,day), inline=False)
+                elif a != 1:
+                    embed.add_field(name="▽", value='[%s](%s)%s' % (name,url_link,day), inline=False)
             else:
+                if b==0:
+                    embed.add_field(name="[일반]", value='[%s](%s)%s' % (name,url_link,day), inline=False)
                 b+=1
-                if b > 13:
+                if b > 9:
                     continue
-                else:
-                    embed.add_field(name="===========================일반============================", value='[%s](%s)%s' % (name,url_link,day), inline=False)         
+                elif b!=1:
+                    embed.add_field(name="▽", value='[%s](%s)%s' % (name,url_link,day), inline=False)         
         await message.channel.send(embed=embed)
     
     if message.content.startswith("!학과공지"):  
@@ -78,8 +82,8 @@ async def on_message(message):
         res = requests.get(url, headers=headers).text
         soup = BeautifulSoup(res, "lxml")
         notices = soup.find("table", attrs={"class":"bbs_con"}).find("tbody").find_all("tr")
-        embed = discord.Embed(title="제목")
-        embed.set_author(name="프로필", url="http://blog.naver.com/seojune5383", icon_url="https://cdn.discordapp.com/attachments/779326874026377226/838400630405857360/yxTC6ZdE0qtg3WML99JOirgEo26CKwsv4X4GZW3zsTgFxQIqHwabQpHGbRC7W63mJ_9Lq3UKx6AE17jRikqJ3dz-1C6Pdia3ovlr.png")
+        embed = discord.Embed(title="[학과공지]")
+        embed.set_author(name="SW Notice Bot", url="https://github.com/gang7994/discord-notice-bot.git", icon_url="https://hywiki.s3.amazonaws.com/thumb/f/fe/%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4%ED%95%99%EB%B6%80.jpg/300px-%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4%ED%95%99%EB%B6%80.jpg")
         a,b=0,0
         for notice in notices:
             col = notice.find_all("td")
@@ -92,17 +96,21 @@ async def on_message(message):
                 continue
             else:
                 if num.get_text() == "[공지]":
+                    if a==0:
+                        embed.add_field(name="[공지]", value='[%s](%s)%s' % (name,url_link,day), inline=False)
                     a+=1
                     if a > 7:
                         continue
-                    else:
-                        embed.add_field(name="===========================공지============================", value='[%s](%s)%s' % (name,url_link,day), inline=False)
+                    elif a != 1:
+                        embed.add_field(name="▽", value='[%s](%s)%s' % (name,url_link,day), inline=False)
                 else:
+                    if b==0:
+                        embed.add_field(name="[일반]", value='[%s](%s)%s' % (name,url_link,day), inline=False)
                     b+=1
                     if b > 9:
                         continue
-                    else:
-                        embed.add_field(name="===========================일반============================", value='[%s](%s)%s' % (name,url_link,day), inline=False)     
+                    elif b!=1:
+                        embed.add_field(name="▽", value='[%s](%s)%s' % (name,url_link,day), inline=False)     
         await message.channel.send(embed=embed)
 access_token = os.environ['BOT_TOKEN']
 client.run(access_token) 
